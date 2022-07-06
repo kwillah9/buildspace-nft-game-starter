@@ -6,6 +6,7 @@ import { ethers } from 'ethers';
 
 import myEpicGame from './utils/MyEpicGame.json'
 
+import Arena  from './Components/Arena';
 import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
 
 import SelectCharacter from "./Components/SelectCharacter";
@@ -62,6 +63,8 @@ const App = () => {
       );
     } else if (currentAccount && !characterNFT) {
       return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+    } else if (currentAccount && characterNFT) {
+      return <Arena characterNFT={characterNFT} setCharacterNFT = {setCharacterNFT}/>;
     }
   };
 
