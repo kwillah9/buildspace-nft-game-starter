@@ -6,7 +6,7 @@ import myEpicGame from '../../utils/MyEpicGame.json';
 import './Arena.css';
 
 
-const Arena = ({ characterNFT, setCharacterNFT }) => {
+const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
 
     const [gameContract, setGameContract] = useState(null);
 
@@ -62,7 +62,7 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
             const playerHp = newPlayerHp.toNumber();
             const sender = from.toString();
 
-            console.log(`Attack Complete: Boss HP: ${bossHp} Player HP: ${playerHp}`);
+            console.log(`AttackComplete: Boss HP: ${bossHp} Player HP: ${playerHp}`);
             
             if (currentAccount === sender.toLowerCase()) {
                 setBoss((preveState) => {
@@ -81,12 +81,12 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
         }
         if (gameContract) {
             fetchBoss();
-            gameContract.on("Attack Complete", onAttackComplete);
+            gameContract.on("AttackComplete", onAttackComplete);
         }
 
         return () => {
             if (gameContract) {
-                gameContract.off("Attack Complete", onAttackComplete);
+                gameContract.off("AttackComplete", onAttackComplete);
             }
         }
     }, [gameContract]);
