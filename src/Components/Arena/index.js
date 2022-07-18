@@ -100,7 +100,7 @@ const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
                 <div className= {`boss-content ${attackState}`}> 
                     <h2>🔥 {boss.name} 🔥</h2>
                     <div className="image-content">
-                    <img src={boss.imageURI} alt={`Boss ${boss.name}`} />
+                    <img src={`https://api.ipfsbrowser.com/ipfs/get.php?hash=${boss.imageURI}`} alt={`Boss ${boss.name}`} />
                     <div className="health-bar">
                         <progress value={boss.hp} max={boss.maxHp} />
                         <p>{`${boss.hp} / ${boss.maxHp} HP`}</p>

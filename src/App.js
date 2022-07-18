@@ -11,6 +11,7 @@ import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
 
 import SelectCharacter from "./Components/SelectCharacter";
 
+import LoadingIndicator from './Components/LoadingIndicator';
 // Constants
 
 const App = () => {
@@ -19,12 +20,15 @@ const App = () => {
 
   const [characterNFT, setCharacterNFT] = useState(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window;
 
       if (!ethereum) {
         console.log("Make sure you have Metamask");
+        setIsLoading(false);
         return;
       }
       else {
@@ -45,9 +49,14 @@ const App = () => {
     catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const renderContent = () => {
+    if (isLoading) {
+      return <LoadingIndicator />;
+    }
+
     if (!currentAccount) {
       return (
         <div className="connect-wallet-container">
@@ -102,6 +111,7 @@ const App = () => {
 
 
   useEffect(() =>  { 
+    setIsLoading(true);
     checkIfWalletIsConnected();
     checkNetwork();
   }, []);
@@ -128,11 +138,11 @@ const App = () => {
       } else {
         console.log('No character NFT found');
       }
+
+      setIsLoading(false);
     };
   
-    /*
-     * We only want to run this, if we have a connected wallet
-     */
+
     if (currentAccount) {
       console.log('CurrentAccount:', currentAccount);
       fetchNFTMetadata();
